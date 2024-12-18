@@ -11,6 +11,7 @@ A Python script that generates QR codes from Excel data and arranges them in a d
 - Configurable grid layout
 - Progress tracking with elapsed time
 - Detailed or minimal progress display
+- Smart Excel file detection and selection
 
 ## Installation
 
@@ -27,13 +28,19 @@ Basic usage with interactive prompts:
 python qr_code_generator.py
 ```
 
+If no input file is specified, the script will:
+1. Look for Excel (.xlsx) files in the current directory
+2. If only one file exists, use it automatically
+3. If multiple files exist, present an interactive menu to choose which file to use
+4. If no Excel files are found, display an error
+
 Command line options:
 ```bash
 python qr_code_generator.py [-h] [-i INPUT] [-c COLUMN] [-w WIDTH] [-t {docx,pdf}] [--header] [-v]
 ```
 
 Options:
-- `-i, --input`: Specify Excel file to use
+- `-i, --input`: Specify Excel file to use (optional - defaults to file selection in current directory)
 - `-c, --column`: Select column number (1-based)
 - `-w, --wide`: Number of QR codes per row (1-10)
 - `-t, --type`: Output format (docx/pdf)
@@ -46,7 +53,10 @@ Options:
 # Use specific file and column
 python qr_code_generator.py -i data.xlsx -c 2
 
-# Create 4-wide grid in PDF format
+# Let script find Excel files and choose interactively
+python qr_code_generator.py
+
+# Create 4-wide grid in PDF format (will prompt for file if not specified)
 python qr_code_generator.py -w 4 -t pdf
 
 # Skip header row prompt and show detailed progress
